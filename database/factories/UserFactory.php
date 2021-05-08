@@ -14,15 +14,12 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
-        $shipping = $this->faker->boolean ? Address::random() : null;
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
-            'shipping' => $shipping?->id,
-            'billing' => ($this->faker->boolean && $shipping) ? Address::random() : null //if billing is empty, then billing and shipping is the same.
         ];
     }
 }
