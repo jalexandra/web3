@@ -24,12 +24,12 @@ use Illuminate\Support\Collection;
 trait ApiResource
 {
 
-    public static function latestOne(): Model
+    public static function latestOne(): Model|null
     {
         return self::latest()->first();
     }
 
-    public static function random(): Model
+    public static function random(): Model|null
     {
         return self::inRandomOrder()->first();
     }
