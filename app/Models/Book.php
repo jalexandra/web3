@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Image image
  * @property int stock
  * @property int price
+ * @property int category_id
+ * @property Category category
  */
 class Book extends Model
 {
@@ -34,5 +36,10 @@ class Book extends Model
     public function image(): BelongsTo
     {
         return $this->belongsTo(Image::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }

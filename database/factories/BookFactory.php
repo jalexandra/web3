@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BookFactory extends Factory
@@ -16,6 +17,7 @@ class BookFactory extends Factory
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'author_id' => Author::random()->id,
+            'category_id' => Category::random()->id,
             'stock' => $this->faker->numberBetween(0, 200),
             'price' => (int)($this->faker->numerify('##99'))
         ];

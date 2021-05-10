@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Author;
+use App\Models\Category;
 use App\Models\Image;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,7 @@ class CreateBooksTable extends Migration
             $table->foreignIdFor(Author::class)->constrained();
             $table->foreignIdFor(Image::class)->nullable()->constrained();
             $table->text('description');
+            $table->foreignIdFor(Category::class)->constrained();
             $table->integer('stock')->default(0)->unsigned();
             $table->float('price')->default(3999)->unsigned();
             $table->timestamps();
