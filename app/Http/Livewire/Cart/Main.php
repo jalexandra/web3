@@ -59,5 +59,6 @@ class Main extends Component
     public function itemDeleted(int $id): void
     {
         unset($this->items[$id]);
+        $this->refreshTotal();
     }
 }
