@@ -12,6 +12,7 @@
     <!-- Scripts before page load-->
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/07049bce1e.js" crossorigin="anonymous"></script>
     @stack('pre-js')
 
     <!-- Fonts -->
@@ -22,26 +23,21 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     @stack('css')
-    @if($liveWire ?? false)
-        @livewireStyles
-    @endif
+    @livewireStyles
 
 </head>
 <body>
     <div id="app">
-        @include('components.navbar')
+        <x-navbar />
 
         <main class="py-4">
             @yield('content')
         </main>
-        <footer class="footer mt-auto py-3">
-            @include('components.footer')
-        </footer>
+
+        <x-footer />
     </div>
 
     @stack('js')
-    @if($liveWire ?? false)
-        @livewireScripts
-    @endif
+    @livewireScripts
 </body>
 </html>

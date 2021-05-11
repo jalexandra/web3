@@ -1,6 +1,8 @@
-<div class=" text-center text-lg-start">
-    <div class="text-center p-3">
-        © {{ \Carbon\Carbon::today()->year }} Copyright:
-        <a class="text-dark" href="{{ url('/') }}">cheesy.test</a>
+<footer class="footer mt-auto py-3">
+    <div class=" text-center text-lg-start">
+        <div class="text-center p-3">
+            © {{ \Carbon\Carbon::today()->year }} Copyright:
+            <a class="text-dark" href="{{ url('/') }}">cheesy.test</a>
+        </div>
     </div>
-</div>
+</footer>
