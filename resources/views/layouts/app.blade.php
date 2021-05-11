@@ -27,13 +27,13 @@
 
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="">
         <x-navbar />
 
-        <main class="py-4">
+        <main class="container py-4">
             @yield('content')
         </main>
-
+        <div class="space"></div>
         <x-footer />
     </div>
 
