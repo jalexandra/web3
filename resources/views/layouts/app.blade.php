@@ -27,7 +27,7 @@
 
 </head>
 <body>
-    <div id="app" class="">
+    <div id="app">
         <x-navbar />
 
         <main class="container py-4">
