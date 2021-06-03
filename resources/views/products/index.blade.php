@@ -5,6 +5,11 @@
  */
 ?>
 
+@push('css')
+{{--    <link rel="stylesheet" href="{{ asset("css/products.css") }}">--}}
+    <link rel="stylesheet" href="{{ mix('css/mix_products.css') }}">
+@endpush
+
 @extends('layouts.app')
 
 @section('content')
@@ -17,11 +22,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-2">
+        <div class="d-none d-lg-block col-2">
             <x-products.filter :categories="$categories" />
         </div>
-        <div class="col-10">
-            @each('products.card', $books, 'book', 'products.empty')
+        <div class="col-lg-10 w-75 mx-auto">
+            <div class="row">
+                @each('products.card', $books, 'book', 'products.empty')
+            </div>
+            <div class="row">
+                {{ $books->links() }}
+            </div>
         </div>
     </div>
 @endsection

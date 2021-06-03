@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Cart;
 
 use App\Models\Book;
+use App\Utils\Cart;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -19,10 +20,8 @@ class Main extends Component
     public bool $isShowing = false;
 
     public function mount(): void{
-        for ($i = 0; $i < 5; $i++) {
-            $book = Book::random();
-            $this->items[$book->id] = ['book' => $book, 'amount' => random_int(1, 10)];
-        }
+
+        $this->items = Cart::getContent();
 
         $this->refreshTotal();
     }
