@@ -22,7 +22,6 @@ class Main extends Component
     public function mount(): void{
 
         $this->items = Cart::getContent();
-
         $this->refreshTotal();
     }
 
@@ -43,6 +42,11 @@ class Main extends Component
         foreach ($this->items as $pair){
             $this->sum += $pair['book']['price'] * $pair['amount'];
         }
+        $result = [];
+        foreach ($this->items as $id => $item) {
+            $result[$id] = $item['amount'];
+        }
+        session()->put('cart', $result);
     }
 
     public function dropdown(): void
@@ -55,9 +59,10 @@ class Main extends Component
         return number_format($this->sum, thousands_separator: ' ');
     }
 
-    public function itemDeleted(int $id): void
+    public function itemDeleted(int $id)
     {
         unset($this->items[$id]);
         $this->refreshTotal();
+        return $this->redirect(route('products.index'));
     }
 }
