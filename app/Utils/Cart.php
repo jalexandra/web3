@@ -71,4 +71,12 @@ class Cart
     {
         session()->put(self::CART_COOKIE_NAME, []);
     }
+
+    public static function has(Book $book): bool
+    {
+        return in_array(
+            $book->id,
+            array_keys(self::getCookie() ?? [])
+        );
+    }
 }

@@ -6,11 +6,19 @@
 <div class="col mb-3">
     <div class="card h-100 shadow-sm">
         <img src="{{ asset('img/thumbnails/' . $book->image->src) }}" class="card-img-top" alt="image of {{ $book->title }}">
-        <a class="text-decoration-none text-white" href="{{ route('cart.add', [$book, 'continue' => Request::fullUrl()]) }}">
-            <div class="label-top success shadow-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add to cart">
-                <i class="fas fa-cart-plus" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add to cart"></i>
-            </div>
-        </a>
+        @if(\App\Utils\Cart::has($book))
+            <a class="text-decoration-none text-white" href="{{ route('cart.remove', [$book, 'continue' => Request::fullUrl()]) }}">
+                <div class="label-top danger shadow-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart">
+                    <i class="fas fa-minus-square" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart"></i>
+                </div>
+            </a>
+        @else
+            <a class="text-decoration-none text-white" href="{{ route('cart.add', [$book, 'continue' => Request::fullUrl()]) }}">
+                <div class="label-top success shadow-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add to cart">
+                    <i class="fas fa-cart-plus" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add to cart"></i>
+                </div>
+            </a>
+        @endif
         <div class="card-body">
             <div class="clearfix mb-3">
                 <span class="float-start price-hp">
