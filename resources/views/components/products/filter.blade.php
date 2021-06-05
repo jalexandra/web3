@@ -1,4 +1,4 @@
-<form action="{{ route('products.index') }}" id="form_filter" onsubmit="handleEmptyInputs()">
+<form action="{{ route('book.index') }}" id="form_filter" onsubmit="handleEmptyInputs()">
     <x-card header="Filter">
         <div class="input-group my-2">
             <input type="text" class="form-control" id="search_filter" name="search" aria-label="Search"

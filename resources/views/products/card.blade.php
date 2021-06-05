@@ -33,7 +33,7 @@
             </h5>
             <div class="text-center my-4">
                 {{ $book->price }} HUF <br />
-                <a href="{{ route('products.show', [$book]) }}" class="btn2 btn-primary">Details</a>
+                <a href="{{ route('book.show', [$book]) }}" class="btn2 btn-primary">Details</a>
             </div>
             <div class="clearfix mb-1">
                 <span class="float-start">

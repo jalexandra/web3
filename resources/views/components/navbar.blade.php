@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse" id="navbarMain">
             <ul class="navbar-nav me-5 mb-2 mb-lg-0">
                 <x-nav.link to="home" />
-                <x-nav.link to="products.index">Shop</x-nav.link>
+                <x-nav.link to="book.index">Shop</x-nav.link>
             </ul>
             <div class="d-inline-block me-auto">
                 <x-nav.search />
