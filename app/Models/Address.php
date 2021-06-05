@@ -33,4 +33,14 @@ class Address extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+    public function equals(array $validated): bool
+    {
+        foreach ($this->fillable as $item) {
+            if($this->$item != $validated[$item]){
+                return false;
+            }
+        }
+        return true;
+    }
 }
