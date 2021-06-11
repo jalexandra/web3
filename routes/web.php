@@ -5,12 +5,15 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Route::view('home', 'home')->middleware('auth')->name('home');
-Route::resource('products', BookController::class);
+//Route::view('home', 'home')->middleware('auth')->name('home');
+Route::resource('book', BookController::class);
+Route::redirect('/', route('book.index'));
+Route::redirect('/home', route('book.index'))->name('home');
+
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function (){
     Route::get('add/{book}', [CartController::class, 'add'])->name('add');

@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Category;
-use App\Utils\Preg;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
     /** @noinspection ProperNullCoalescingOperatorUsageInspection */
-    public function index()
+    public function index(): Factory|View|Application
     {
         $searchTerm = \request('search') ?? '';
         $priceMin = \request('price_from') ?? 0;
@@ -52,9 +54,9 @@ class BookController extends Controller
         //
     }
 
-    public function show(Book $book)
+    public function show(Book $book): Factory|View|Application
     {
-        //
+        return view('products.show', ['book' => $book]);
     }
 
     public function edit(Book $book)
@@ -69,6 +71,6 @@ class BookController extends Controller
 
     public function destroy(Book $book)
     {
-        //
+        dd($book);
     }
 }
