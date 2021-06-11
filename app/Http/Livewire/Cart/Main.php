@@ -63,6 +63,6 @@ class Main extends Component
     {
         unset($this->items[$id]);
         $this->refreshTotal();
-        return $this->redirect(route('book.index'));
+        return $this->redirectRoute('book.index');
     }
 }

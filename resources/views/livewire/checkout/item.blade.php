@@ -13,13 +13,13 @@ $amount = $pair['amount']
 {{--<li>--}}
 {{--    <div class="dropdown-item-non-hoverable d-flex row">--}}
 {{--        <div class="col-3 align-items-center">--}}
-{{--            <a href="{{ route('products.show', [$id]) }}">--}}
+{{--            <a href="{{ route('book.show', [$id]) }}">--}}
 {{--                <img class="img-fluid cart-image" src="{{ asset("img/thumbnails/{$book['image']['src']}") }}" alt="">--}}
 {{--            </a>--}}
 {{--        </div>--}}
 {{--        <div class="col-8">--}}
 {{--            <div class="row">--}}
-{{--                <a href="{{ route('products.show', [$id]) }}"--}}
+{{--                <a href="{{ route('book.show', [$id]) }}"--}}
 {{--                   class="h5 col text-decoration-none text-wrap">{{ $book['title'] }}</a>--}}
 {{--            </div>--}}
 {{--            <div class="row">--}}
@@ -34,12 +34,12 @@ $amount = $pair['amount']
 
 <tr>
     <td>
-        <a href="{{ route('products.show', [$id]) }}">
+        <a href="{{ route('book.show', [$id]) }}">
             <img class="img-fluid checkout-img" src="{{ asset("img/thumbnails/{$book['image']['src']}") }}" alt="">
         </a>
     </td>
     <td>
-        <a href="{{ route('products.show', [$id]) }}" class="h5 col text-decoration-none text-wrap">
+        <a href="{{ route('book.show', [$id]) }}" class="h5 col text-decoration-none text-wrap">
             {{ $book['title'] }}
         </a>
     </td>
