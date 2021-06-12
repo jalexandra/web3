@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\BouncerCheck;
+use App\Http\Requests\BookRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
+use File;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -87,9 +89,29 @@ class BookController extends Controller
                 ->map(fn($item) => $item->name ));
     }
 
-    public function update(Request $request, Book $book)
+    /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+    public function update(BookRequest $request, Book $book)
     {
-        dd($request);
+        $result = $request
+            ->butSwitch('author')->to('author_id')
+                ->byApplying(fn(string $author_name)
+                    => Author::where('name', $author_name)
+                        ->firstOrCreate(['name' => $author_name])->id)
+            ->butSwitch('category')->to('category_id')
+                ->byApplying( fn(string $category_name)
+                    => Category::where('name', $category_name)
+                        ->firstOrCreate(['name' => $category_name])->id)
+            ->toSimpleArray();
+
+        if($request->hasFile('image')){
+            if ($book->image) {
+                File::delete(asset("img/thumbnails/{$book->image->src}"));
+            }
+
+
+        }
+
+        dd($result);
     }
 
     public function destroy(Book $book): Redirector|Application|RedirectResponse

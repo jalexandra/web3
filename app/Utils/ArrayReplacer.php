@@ -33,4 +33,10 @@ class ArrayReplacer
     {
         return $this->baseArray;
     }
+
+    public function butSwitch(string $needle): static
+    {
+        $this->needle = $needle;
+        return $this;
+    }
 }

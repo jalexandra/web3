@@ -34,7 +34,7 @@
                     Image:
                     @if ($book)
                         <div>
-                            <img src="{{ asset("img/thumbnails/{$book->image->src}") }}" alt="" class="card-img-top w-25">
+                            <img src="{{ asset("img/thumbnails/{$book->image}") }}" alt="" class="card-img-top w-25">
                         </div>
                     @endif
                     <x-form.input type="file" name="image" class="my-3" />

@@ -15,8 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string description
  * @property int author_id
  * @property Author author
- * @property int image_id
- * @property Image image
+ * @property string image
  * @property int stock
  * @property int price
  * @property int category_id
@@ -31,11 +30,6 @@ class Book extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
-    }
-
-    public function image(): BelongsTo
-    {
-        return $this->belongsTo(Image::class);
     }
 
     public function category(): BelongsTo

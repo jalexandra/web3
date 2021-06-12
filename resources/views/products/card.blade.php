@@ -5,7 +5,7 @@
 
 <div class="col mb-3">
     <div class="card h-100 shadow-sm">
-        <img src="{{ asset('img/thumbnails/' . $book->image->src) }}" class="card-img-top" alt="image of {{ $book->title }}">
+        <img src="{{ asset('img/thumbnails/' . $book->image) }}" class="card-img-top" alt="image of {{ $book->title }}">
         @if(\App\Utils\Cart::has($book))
             <a class="text-decoration-none text-white" href="{{ route('cart.remove', [$book, 'continue' => Request::fullUrl()]) }}">
                 <div class="label-top danger shadow-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart">
