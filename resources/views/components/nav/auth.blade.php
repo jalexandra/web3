@@ -4,7 +4,7 @@
     <ul class="dropdown-menu" aria-labelledby="profileDropdown">
         @auth
             <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+            <li><x-magic.button method="post" class="dropdown-item" :route="route('logout')">Logout</x-magic.button></li>
         @else
             <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
             <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
