@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-auto">
-                <img src="{{ asset('img/thumbnails/' . $book->image) }}" alt="">
+                <img src="{{ asset('img/thumbnails/' . $book->image) }}" alt="" class="img-max">
             </div>
             <div class="col-12 col-lg">
                 <div class="container">

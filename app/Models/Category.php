@@ -19,6 +19,8 @@ class Category extends Model
 {
     use HasFactory, ApiResource;
 
+    protected $fillable = ['name'];
+
     public function book(): HasMany
     {
         return $this->hasMany(Book::class);

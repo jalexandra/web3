@@ -15,6 +15,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Str;
 
 class BookController extends Controller
 {
@@ -69,9 +70,11 @@ class BookController extends Controller
                 ->map(fn($item) => $item->name ));
     }
 
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        //
+        $book = Book::create($this->requestMutation($request));
+
+        return redirect(route('book.show', [$book]));
     }
 
     public function show(Book $book): Factory|View|Application
@@ -92,31 +95,38 @@ class BookController extends Controller
     /** @noinspection PhpPossiblePolymorphicInvocationInspection */
     public function update(BookRequest $request, Book $book)
     {
-        $result = $request
-            ->butSwitch('author')->to('author_id')
-                ->byApplying(fn(string $author_name)
-                    => Author::where('name', $author_name)
-                        ->firstOrCreate(['name' => $author_name])->id)
-            ->butSwitch('category')->to('category_id')
-                ->byApplying( fn(string $category_name)
-                    => Category::where('name', $category_name)
-                        ->firstOrCreate(['name' => $category_name])->id)
-            ->toSimpleArray();
+        $book->update($this->requestMutation($request, $book));
 
-        if($request->hasFile('image')){
-            if ($book->image) {
-                File::delete(asset("img/thumbnails/{$book->image->src}"));
-            }
-
-
-        }
-
-        dd($result);
+        return redirect(route('book.show', [$book]));
     }
 
     public function destroy(Book $book): Redirector|Application|RedirectResponse
     {
         $book->delete();
         return redirect(route('book.admin'));
+    }
+
+    public function requestMutation(BookRequest $request, Book $book = null): array
+    {
+        $result = $request
+            ->butSwitch('author')->to('author_id')
+            ->byApplying(fn(string $author_name) => Author::where('name', $author_name)
+                ->firstOrCreate(['name' => $author_name])->id
+            )
+            ->butSwitch('category')->to('category_id')
+            ->byApplying(fn(string $category_name) => Category::where('name', $category_name)
+                ->firstOrCreate(['name' => $category_name])->id
+            )
+            ->toSimpleArray();
+
+        $uploadedFile = $request->file('image');
+        if ($uploadedFile) {
+            if ($book?->image) {
+                $a = File::delete(public_path("img/thumbnails/$book->image"));
+            }
+
+            $result['image'] = $uploadedFile->move('img/thumbnails/', Str::random(8) . '.' . $uploadedFile->getClientOriginalExtension())->getFilename();
+        }
+        return $result;
     }
 }

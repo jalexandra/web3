@@ -25,7 +25,7 @@ class Book extends Model
 {
     use HasFactory, ApiResource;
 
-    protected $fillable = ['title', 'description', 'author_id', 'image_id', 'stock', 'price'];
+    protected $fillable = ['title', 'description', 'author_id', 'category_id', 'image', 'stock', 'price'];
 
     public function author(): BelongsTo
     {

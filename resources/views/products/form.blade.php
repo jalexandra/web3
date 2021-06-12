@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <x-form
-                    :to="$book ? route('book.update', [$book]) : route('book.create')"
+                    :to="$book ? route('book.update', [$book]) : route('book.store')"
                     :method="$book ? 'put' : 'post'"
                     :allowFile="true"
                     class="w-50 m-auto"
