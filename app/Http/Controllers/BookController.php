@@ -9,7 +9,9 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class BookController extends Controller
 {
@@ -50,7 +52,8 @@ class BookController extends Controller
         ]);
     }
 
-    public function admin(){
+    public function admin(): Factory|View|Application
+    {
         return view('products.admin')->with('books', Book::all());
     }
 
@@ -79,8 +82,9 @@ class BookController extends Controller
         //
     }
 
-    public function destroy(Book $book)
+    public function destroy(Book $book): Redirector|Application|RedirectResponse
     {
-        dd($book);
+        $book->delete();
+        return redirect(route('book.admin'));
     }
 }
