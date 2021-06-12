@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\BouncerCheck;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(BouncerCheck::class)->except('index', 'show');
+    }
+
     /** @noinspection ProperNullCoalescingOperatorUsageInspection */
     public function index(): Factory|View|Application
     {
