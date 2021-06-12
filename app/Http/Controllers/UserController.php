@@ -35,9 +35,9 @@ class UserController extends Controller
         return view('users.show')->with('user', $user);
     }
 
-    public function edit(User $user)
+    public function edit(User $user): Factory|View|Application
     {
-        //
+        return view('users.form')->with('user', $user);
     }
 
     public function update(Request $request, User $user)
