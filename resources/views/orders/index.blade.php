@@ -18,7 +18,7 @@
 
     <div class="container">
         <x-table.datatable
-            id="product_data"
+            id="order_data"
             class="table-responsive"
             :for="$orders"
             :as="[
@@ -30,7 +30,7 @@
             ]"
             :view="true"
             :delete="true"
-            route="book"
+            route="order"
         />
     </div>
 @endsection

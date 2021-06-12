@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
     Route::resource('address', AddressController::class);
     Route::resource('order', OrderController::class);
+    Route::get('my-orders', [OrderController::class, 'myOrders'])->name('my-orders');
 });
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function (){
