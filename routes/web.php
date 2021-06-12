@@ -1,6 +1,11 @@
 <?php
 
-use App\Http\Controllers\{AddressController, BookController, CartController, CheckoutController, UserController};
+use App\Http\Controllers\{AddressController,
+    BookController,
+    CartController,
+    CheckoutController,
+    OrderController,
+    UserController};
 use Illuminate\Support\Facades\Route;
 
 Route::resource('book', BookController::class);
@@ -13,6 +18,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::resource('user', UserController::class)->except('create', 'store');
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
     Route::resource('address', AddressController::class);
+    Route::resource('order', OrderController::class);
 });
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function (){

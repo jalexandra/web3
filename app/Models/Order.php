@@ -26,6 +26,11 @@ class Order extends Model
 
     protected $appends = ['status'];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function shipping(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'shipping_id');
