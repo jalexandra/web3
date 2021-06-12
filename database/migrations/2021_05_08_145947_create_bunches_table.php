@@ -11,10 +11,8 @@ class CreateBunchesTable extends Migration
     public function up(): void
     {
         Schema::create('bunches', function (Blueprint $table) {
-//            $table->string('order_id')->index();
-//            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(Order::class)->constrained();
-            $table->foreignIdFor(Book::class)->constrained();
+            $table->foreignIdFor(Order::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Book::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('amount')->default(1);
             $table->timestamps();
 

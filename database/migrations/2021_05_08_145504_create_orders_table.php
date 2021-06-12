@@ -11,7 +11,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(User::class)->nullable()->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('shipping_id')->nullable();
             $table->string('billing_id')->nullable();
             $table->tinyInteger('status_num')->default(0);
