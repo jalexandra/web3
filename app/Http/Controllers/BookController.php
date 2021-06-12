@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\BouncerCheck;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
@@ -57,9 +58,13 @@ class BookController extends Controller
         return view('products.admin')->with('books', Book::all());
     }
 
-    public function create()
+    public function create(): Factory|View|Application
     {
-        //
+        return view('products.form')
+            ->with('authors', Author::all()
+                ->map(fn($item) => $item->name ))
+            ->with('categories', Category::all()
+                ->map(fn($item) => $item->name ));
     }
 
     public function store(Request $request)
@@ -72,14 +77,19 @@ class BookController extends Controller
         return view('products.show', ['book' => $book]);
     }
 
-    public function edit(Book $book)
+    public function edit(Book $book): Factory|View|Application
     {
-        //
+        return view('products.form')
+            ->with('book', $book)
+            ->with('authors', Author::all()
+                ->map(fn($item) => $item->name ))
+            ->with('categories', Category::all()
+                ->map(fn($item) => $item->name ));
     }
 
     public function update(Request $request, Book $book)
     {
-        //
+        dd($request);
     }
 
     public function destroy(Book $book): Redirector|Application|RedirectResponse
