@@ -50,6 +50,10 @@ class BookController extends Controller
         ]);
     }
 
+    public function admin(){
+        return view('products.admin')->with('books', Book::all());
+    }
+
     public function create()
     {
         //

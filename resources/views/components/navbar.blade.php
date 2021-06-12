@@ -12,6 +12,7 @@
                         <a href="#" class="nav-link disabled">|</a>
                     </li>
                     <x-nav.link to="user.index" :bouncer="\App\Models\User::class">Users</x-nav.link>
+                    <x-nav.link to="book.admin" :bouncer="\App\Models\Book::class">Stock</x-nav.link>
                 @endif
             </ul>
             <div class="d-inline-block me-auto">
