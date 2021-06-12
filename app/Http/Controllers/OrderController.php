@@ -54,6 +54,9 @@ class OrderController extends Controller
 
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect(route(
+            Auth::user()->can('index', Order::class) ? 'order.index' : 'my-orders'
+        ));
     }
 }
