@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Traits\ApiResource;
 use App\Traits\UUID;
+use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,7 +26,8 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @property string shipping_id
  * @property Address shipping
  * @property string remember_token
- * @property \DateTime email_verified_at
+ * @property DateTime email_verified_at
+ * @property Collection roles
  */
 class User extends Authenticatable
 {

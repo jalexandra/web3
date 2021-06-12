@@ -29,9 +29,9 @@ class UserController extends Controller
         return view('users.index')->with('users', User::all());
     }
 
-    public function show(User $user)
+    public function show(User $user): Factory|View|Application
     {
-        //
+        return view('users.show')->with('user', $user);
     }
 
     public function edit(User $user)

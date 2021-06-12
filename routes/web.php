@@ -1,13 +1,17 @@
 <?php
 
-use App\Http\Controllers\{BookController, CartController, CheckoutController, UserController};
+use App\Http\Controllers\{AddressController, BookController, CartController, CheckoutController, UserController};
 use Illuminate\Support\Facades\Route;
 
 Route::resource('book', BookController::class);
-Route::resource('user', UserController::class)->except('create', 'store')->middleware('auth');
 
 Route::redirect('/', route('book.index'));
 Route::redirect('/home', route('book.index'))->name('home');
+
+Route::group(['middleware' => 'auth'], function (){
+    Route::resource('user', UserController::class)->except('create', 'store');
+    Route::resource('address', AddressController::class);
+});
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function (){
     Route::get('add/{book}', [CartController::class, 'add'])->name('add');
