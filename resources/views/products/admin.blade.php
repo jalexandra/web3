@@ -17,6 +17,9 @@
             use App\Models\Book;
             /** @var Book $book */
         @endphp
+        <div class="my-3">
+            <a href="{{ route('book.create') }}" class="btn btn-success">New Book</a>
+        </div>
         <x-table.datatable
             id="product_data"
             class="table-responsive"
