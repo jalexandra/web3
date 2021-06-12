@@ -1,19 +1,13 @@
 <?php
 
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\{BookController, CartController, CheckoutController, UserController};
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-//Route::view('home', 'home')->middleware('auth')->name('home');
 Route::resource('book', BookController::class);
+Route::resource('user', UserController::class)->except('create', 'store')->middleware('auth');
+
 Route::redirect('/', route('book.index'));
 Route::redirect('/home', route('book.index'))->name('home');
-
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function (){
     Route::get('add/{book}', [CartController::class, 'add'])->name('add');
