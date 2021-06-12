@@ -10,6 +10,7 @@ Route::redirect('/home', route('book.index'))->name('home');
 
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('user', UserController::class)->except('create', 'store');
+    Route::get('profile', [UserController::class, 'profile'])->name('profile');
     Route::resource('address', AddressController::class);
 });
 

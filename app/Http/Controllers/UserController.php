@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\BouncerCheck;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Utils\StatusCode;
 use Auth;
@@ -40,9 +41,14 @@ class UserController extends Controller
         return view('users.form')->with('user', $user);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $user->update($request->validated());
+        $user->save();
+        return redirect(Auth::user()->can('show', User::class)
+            ? route('user.show', [$user])
+            : route('profile')
+        );
     }
 
     public function destroy(User $user): RedirectResponse
