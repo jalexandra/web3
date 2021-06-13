@@ -14,7 +14,7 @@ $amount = $pair['amount']
     <div class="dropdown-item-non-hoverable d-flex row">
         <div class="col-3 align-items-center">
             <a href="{{ route('book.show', [$id]) }}">
-                <img class="img-fluid cart-image" src="{{ asset("img/thumbnails/{$book['image']['src']}") }}" alt="">
+                <img class="img-fluid cart-image" src="{{ asset("img/thumbnails/{$book['image']}") }}" alt="">
             </a>
         </div>
         <div class="col-8">
