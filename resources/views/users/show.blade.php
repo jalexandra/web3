@@ -26,7 +26,7 @@
                                     <x-user.property :property="$user->email_verified_at ?? 'Never'">Email verified at:</x-user.property>
                                     <x-user.property :property="$user->created_at">Registered:</x-user.property>
 
-                                    <x-user.operations :model="\App\Models\User::class" :user="$user"></x-user.operations>
+                                    <x-user.operations :model="\App\Models\User::class" :user="$user" />
                                     <tr class="border-top">
                                         <th scope="row">Shipping address:</th>
                                         <td>
@@ -37,7 +37,13 @@
                                             @endif
                                         </td>
                                     </tr>
-                                    <x-user.operations :model="\App\Models\Address::class" :user="$user" :item="$user->shipping"></x-user.operations>
+                                    @if ($user->shipping)
+                                        <x-user.operations :model="\App\Models\Address::class" :user="$user" :item="$user->shipping" />
+                                    @else
+                                        <tr>
+                                            <td><a href="{{ route('address.create', ['user_id' => $user->id]) }}" class="btn btn-success">Add</a></td>
+                                        </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>

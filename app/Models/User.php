@@ -21,8 +21,6 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @property string name
  * @property string email
  * @property string password
- * @property string billing_id
- * @property Address billing
  * @property string shipping_id
  * @property Address shipping
  * @property string remember_token
@@ -34,7 +32,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable, ApiResource, UUID, HasRolesAndAbilities;
 
     protected $fillable = [
-        'name', 'email', 'password', 'billing_id', 'shipping_id'
+        'name', 'email', 'password', 'shipping_id'
     ];
 
     protected $hidden = [
@@ -48,11 +46,6 @@ class User extends Authenticatable
     public function shipping(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'shipping_id');
-    }
-
-    public function billing(): BelongsTo
-    {
-        return $this->belongsTo(Address::class, 'billing_id');
     }
 
     public function orders(): HasMany

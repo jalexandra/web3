@@ -10,7 +10,6 @@ class AddForeignAddresses extends Migration
     {
         Schema::table('orders', function (Blueprint $table){
             $table->foreign('shipping_id')->references('id')->on('addresses')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('billing_id')->references('id')->on('addresses')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

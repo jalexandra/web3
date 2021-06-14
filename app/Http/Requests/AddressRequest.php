@@ -3,15 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Rules\Phonenumber;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class FillInDetailsRequest extends ExtendedFormRequest
+class AddressRequest extends ExtendedFormRequest
 {
     public function rules(): array
     {
         return [
-            'used_address' => [],
+            'user_id' => ['required', Rule::exists('users', 'id')],
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email'],
             'country' => ['required', Rule::exists('countries', 'name')],
@@ -19,9 +18,8 @@ class FillInDetailsRequest extends ExtendedFormRequest
             'city' => ['required', 'min:3'],
             'street' => ['required', 'min:3'],
             'house' => ['required', 'min:1'],
-            'note' => ['min:3'],
+            'note' => [''],
             'phone' => ['required', new Phonenumber()],
-            'tos' => ['accepted'] //https://laravel.com/docs/8.x/validation#rule-accepted
         ];
     }
 }

@@ -3,17 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FillInDetailsRequest;
-use App\Models\Address;
-use App\Models\Country;
-use App\Models\Order;
-use App\Utils\ArrayHelper;
-use App\Utils\ArrayReplacer;
+use App\Models\{Address, Country, Order};
 use App\Utils\Cart;
-use App\Utils\Request;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
@@ -44,22 +40,34 @@ class CheckoutController extends Controller
                     => Country::where('name', $country)
                         ->first()?->id
             )->toSimpleArray();
-
         if ($request->get('used_address')) {
-            /** @var Address $addressInDatabase */
             $addressInDatabase = Address::find($request->get('used_address'));
             if($addressInDatabase->equals($switchedRequest)){
                 $address = $addressInDatabase;
             }else{
-                $address = Address::make($switchedRequest);
+                $address = Address::create($switchedRequest);
             }
         }else{
-            $address = Address::make($switchedRequest);
+            $address = Address::create($switchedRequest);
+        }
+        return view('checkout.step-four')
+                ->with('address', $address)
+                ->with('cart', Cart::getContent());
+    }
+
+    public function stepFive(Request $request){
+        $order = Order::create([
+            'user_id' => Auth::user()?->id,
+            'shipping_id' => $request->input('address_id')
+        ]);
+
+        foreach (Cart::getContent() as $item) {
+            $order->books()->attach($item['book']->id, ['amount' => $item['amount']]);
         }
 
-        return view('checkout.step-four', [
-            'address' => $address,
-            'cart' => Cart::getContent()
-        ]);
+        $order->save();
+
+        Cart::clear();
+        return view('checkout.step-five');
     }
 }

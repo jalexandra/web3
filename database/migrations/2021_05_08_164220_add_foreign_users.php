@@ -10,7 +10,6 @@ class AddForeignUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table){
             $table->foreign('shipping_id')->references('id')->on('addresses')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('billing_id')->references('id')->on('addresses')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

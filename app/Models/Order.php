@@ -7,6 +7,7 @@ use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Order
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Address billing
  * @property int status_num
  * @property string status
+ * @property string user_id
  */
 class Order extends Model
 {
@@ -25,6 +27,19 @@ class Order extends Model
     protected $fillable = ['shipping_id', 'billing_id', 'status_num'];
 
     protected $appends = ['status'];
+
+    public static function getStatusTextOf(int $status_num): string
+    {
+        return match ($status_num) {
+            0 => 'Processing',
+            1 => 'Packing',
+            2 => 'On route',
+            3 => 'Completed',
+            4 => 'Cancelled by customer',
+            5 => 'Cancelled by us',
+            default => '',
+        };
+    }
 
     public function user(): BelongsTo
     {
@@ -43,15 +58,7 @@ class Order extends Model
 
     public function getStatusAttribute(): string
     {
-        return match ($this->status_num) {
-            0 => 'Processing',
-            1 => 'Packing',
-            2 => 'On route',
-            3 => 'Completed',
-            4 => 'Cancelled by customer',
-            5 => 'Cancelled by us',
-            default => '',
-        };
+        return self::getStatusTextOf($this->status_num);
     }
 
     public function setStatusAttribute($value): int
@@ -67,7 +74,7 @@ class Order extends Model
         };
     }
 
-    public function books()
+    public function books(): BelongsToMany
     {
         return $this->belongsToMany(Book::class, 'bunches')->withPivot('amount');
     }

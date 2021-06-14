@@ -2,84 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddressRequest;
 use App\Models\Address;
+use App\Models\Country;
+use App\Models\User;
+use Auth;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class AddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): Factory|View|Application
     {
-        //
+        return view('addresses.form', ['countries' => Country::all(), 'user_id' => request()->get('user_id')]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(AddressRequest $request)
     {
-        //
+        $result = $request
+            ->butSwitch('country')
+            ->to('country_id')
+            ->byApplying( fn(string $countryName)
+            => Country::where('name', $countryName)->first()->id
+            )->toSimpleArray();
+
+        $address = Address::create($result);
+        /** @var User $relatedUser */
+        $relatedUser = User::find($request->get('user_id'));
+        $relatedUser->shipping()->associate($address);
+        $relatedUser->save();
+        return redirect(Auth::id() == $relatedUser->id
+                            ? route('profile')
+                            : route('user.show', $relatedUser)
+        );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
     public function show(Address $address)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Address $address)
+    public function edit(Address $address): Factory|View|Application
     {
-        //
+        return view('addresses.form', ['countries' => Country::all(), 'user_id' => request()->get('user_id'), 'address' => $address]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Address $address)
+    public function update(AddressRequest $request, Address $address): Redirector|Application|RedirectResponse
     {
-        //
+        $result = $request
+            ->butSwitch('country')
+            ->to('country_id')
+            ->byApplying( fn(string $countryName)
+                => Country::where('name', $countryName)->first()->id
+            )->toSimpleArray();
+        $address->update($result);
+        $address->save();
+        $relatedUser = User::find($request->get('user_id'));
+        return redirect(Auth::id() == $relatedUser->id
+            ? route('profile')
+            : route('user.show', $relatedUser)
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Address $address)
-    {
-        //
+    {;
+        /** @var User $relatedUser */
+        $relatedUser = User::find(request()->get('user_id'));
+        $relatedUser->shipping_id = null;
+        $relatedUser->save();
+        $address->delete();
+        return redirect(Auth::id() === $relatedUser->id ? route('profile') : route('user.show', $relatedUser));
     }
 }

@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function profile(): View|Factory|Application
     {
-        return view('users.show')->with(Auth::user());
+        return view('users.show')->with('user', Auth::user());
     }
 
     public function index(): View|Factory|Application

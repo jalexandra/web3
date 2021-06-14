@@ -15,13 +15,11 @@ class OrderFactory extends Factory
     {
         /** @var User|null $user */
         $user = $this->faker->boolean ? User::random() : null;
+        $parameters = $user ? [ 'name' => $user->name, 'email' => $user->email ] : [];
+        $address = $user?->shipping ?? Address::factory($parameters)->create();
         return [
             'user_id' => $user?->id,
-            'shipping_id' => $user?->shipping ?? Address::factory()->create()->id,
-            'billing_id'
-            => $user?->billing
-                ?? ($user?->shipping
-                    ?? Address::factory()->create()->id),
+            'shipping_id' => $address->id,
             'status_num' => $this->faker->numberBetween(0, 5),
         ];
     }

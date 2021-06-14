@@ -8,13 +8,10 @@ use Illuminate\Database\Seeder;
 
 class OrderSeeder extends Seeder
 {
-    /**
-     * @throws \Exception
-     */
-    public function run()
+    public function run(): void
     {
         /** @var Order $order */
-        Order::factory(400)->create();
+        Order::factory(200)->create();
         $orders = Order::all();
         foreach ($orders as $order) {
             $books = Book::sample(random_int(1, 10));

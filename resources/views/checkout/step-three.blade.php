@@ -39,5 +39,4 @@ use Illuminate\Database\Eloquent\Collection;
             </div>
         </div>
     </div>
-    @dump($errors)
 @endsection

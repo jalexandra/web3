@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Collection;
         <li>
             <div class="mx-3 mt-3 clearfix">
                 <span class="h5 float-start">Total: {{ $this->total }} HUF</span>
-                <a href="#" class="btn btn-success float-end">Checkout</a>
+                <a href="{{ route('checkout.1') }}" class="btn btn-success float-end">Checkout</a>
             </div>
         </li>
     </ul>

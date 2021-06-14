@@ -13,12 +13,7 @@ class AddressSeeder extends Seeder
         $users = User::sample(User::count() - 10);
         /** @var User $user */
         foreach ($users as $user){
-            $user->shipping_id = Address::factory()->create()->id;
-            /** @noinspection PhpUnhandledExceptionInspection */
-            if(random_int(0, 1)){
-                $user->billing_id = Address::factory()->create()->id;
-            }
-
+            $user->shipping_id = Address::factory(['email' => $user->email, 'name' => $user->name])->create()->id;
             $user->save();
         }
     }

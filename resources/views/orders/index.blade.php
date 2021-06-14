@@ -24,7 +24,7 @@
             :as="[
                 'ID',
                 'Status',
-                'Ordered by' => fn(Order $order) => $order->user ? $order->user->email . ' (registered)' : $order->shipping->email,
+                'Ordered by' => fn(Order $order) => $order->user ? $order->user->email . ' (registered)' : $order->shipping?->email,
                 'City' => fn(Order $order) => $order->shipping?->city,
                 'Created At'
             ]"

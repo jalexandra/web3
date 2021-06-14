@@ -2,7 +2,7 @@
 <table class="{{ $class ?? '' }}" id="{{ $id ?? '' }}">
     <x-table.header :fields="$as" :operations="$operations ?? true" />
     <tbody>
-    @foreach($for as $item)
+    @forelse($for as $item)
         <tr>
             @foreach($as as $key => $prop)
                 <x-table.property :item="$item" :key="$key" :prop="$prop" />
@@ -11,7 +11,11 @@
                 <x-table.operations :item="$item" :route="$route" :view="$view ?? false" :edit="$edit ?? false" :delete="$delete ?? false" />
             @endisset
         </tr>
-    @endforeach
+    @empty
+        <tr>
+            <td colspan="{{ count($as) }}">Nothing here</td>
+        </tr>
+    @endforelse
     </tbody>
 </table>
 
